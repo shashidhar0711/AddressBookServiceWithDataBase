@@ -104,5 +104,66 @@ namespace AddressBookServiceWithDataBase
                 }
             }
         }
+
+        /// <summary>
+        /// Retrieve contact with in date range.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="System.Exception"></exception>
+        public void RetrieveContactWithinDateRange(string query)
+        {
+            try
+            {
+                /// Creating instance of object class
+                AddressBookModel addressBookModel = new AddressBookModel();
+                using (this.connection)
+                {
+                    SqlCommand command = new SqlCommand(query, this.connection);
+                    /// Connection opens
+                    this.connection.Open();
+                    /// Executing the sql query
+                    SqlDataReader dataReader = command.ExecuteReader();
+                    /// If not null
+                    /// Read all data form database
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            addressBookModel.ContactId = dataReader.GetInt32(0);
+                            addressBookModel.FullName = dataReader.GetString(1);
+                            addressBookModel.Address = dataReader.GetString(3);
+                            addressBookModel.City = dataReader.GetString(4);
+                            addressBookModel.State = dataReader.GetString(5);
+                            addressBookModel.PhoneNumber = dataReader.GetString(6);
+                            addressBookModel.Zip = dataReader.GetInt32(7);
+                            addressBookModel.Email = dataReader.GetString(8);
+                            addressBookModel.AddressBookName = dataReader.GetString(9);
+                            addressBookModel.AddressBookType = dataReader.GetString(10);
+                            addressBookModel.Start_Date = dataReader.GetDateTime(11);
+
+                            Console.WriteLine(addressBookModel.ContactId + " , " + addressBookModel.FullName + " , " + addressBookModel.Address + " , "
+                            + addressBookModel.City + " , " + addressBookModel.State + " , " + addressBookModel.PhoneNumber + " , " + addressBookModel.Zip + " , " 
+                            + addressBookModel.Email+" , "+addressBookModel.AddressBookName+" , "+addressBookModel.AddressBookType+" , "+addressBookModel.Start_Date);
+                            Console.WriteLine();
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No Data Found");
+                    }
+                    dataReader.Close();
+                    /// Connection closes
+                    this.connection.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+        }
     }
 }
