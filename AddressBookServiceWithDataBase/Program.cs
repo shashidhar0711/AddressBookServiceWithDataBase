@@ -13,8 +13,8 @@ namespace AddressBookServiceWithDataBase
             Console.WriteLine("Welcome to Address Book Service");
             AddressBookModel addressBookModel = new AddressBookModel();
             AddressBookRepo addressBookRepo = new AddressBookRepo();
-            /// Writing query to get within date range contact data
-            addressBookRepo.RetrieveContactWithinDateRange("select * from Address_Book where Start_Date between cast('2019-01-01' as date) and SYSDATETIME()");
+            /// Writing query to get contact by giving city
+            addressBookRepo.RetrieveContactDataByGivenCity("select * from Address_Book where City = 'Bangarpet'");
 
         }
     }
