@@ -19,6 +19,6 @@ namespace AddressBookServiceWithDataBase
         public string Email { get; set; }
         public string AddressBookName { get; set; }
         public string AddressBookType { get; set; }
-        public int BookId { get; set; }
+        public DateTime Start_Date { get; set; }
     }
 }
