@@ -66,5 +66,43 @@ namespace AddressBookServiceWithDataBase
                 this.connection.Close();
             }
         }
+
+        /// <summary>
+        /// Updates the contact from table.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="System.Exception"></exception>
+        public bool UpdateContactFromTable(string query)
+        {
+            using (this.connection)
+            {
+                try
+                {
+                    this.connection.Open();
+                    SqlCommand command = this.connection.CreateCommand();
+                    /// Gets or sets the sql statement to execute at the data base
+                    command.CommandText = query;
+                    /// It is used to executing the query and it does not return data
+                    /// Instead Returns number of rows effected
+                    int numberOfEffectedRows = command.ExecuteNonQuery();
+                    if (numberOfEffectedRows != 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+                finally
+                {
+                    this.connection.Close();
+                }
+            }
+        }
     }
 }

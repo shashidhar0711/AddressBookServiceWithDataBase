@@ -18,7 +18,6 @@ namespace AddressBookServiceWithDataBase
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public string AddressBookName { get; set; }
-        public int TypeId { get; set; }
         public string AddressBookType { get; set; }
         public int BookId { get; set; }
     }
