@@ -11,9 +11,10 @@ namespace AddressBookServiceWithDataBase
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to Address Book Service");
-            AddressBookModel fdf = new AddressBookModel();
+            AddressBookModel addressBookModel = new AddressBookModel();
             AddressBookRepo addressBookRepo = new AddressBookRepo();
-            addressBookRepo.GetAllRecordsOfContacts("select * from Address_Book");
+            /// Writing query to update
+            Console.WriteLine(addressBookRepo.UpdateContactFromTable("update Address_Book set Address = 'Gowtham Nagar' where FullName = 'Madhuri'"));
 
         }
     }
