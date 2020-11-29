@@ -14,7 +14,18 @@ namespace AddressBookServiceWithDataBase
             AddressBookModel addressBookModel = new AddressBookModel();
             AddressBookRepo addressBookRepo = new AddressBookRepo();
             /// Writing query to get contact by giving city
-            addressBookRepo.RetrieveContactDataByGivenCity("select * from Address_Book where City = 'Bangarpet'");
+            addressBookModel.FullName = "Shashidhar";
+            addressBookModel.Address = "Gowtham Nagar";
+            addressBookModel.City = "Bangalore";
+            addressBookModel.State = "Gujarat";
+            addressBookModel.Zip = "563114";
+            addressBookModel.PhoneNumber = "8073112156";
+            addressBookModel.Email = "shashidhar.shashi@gmail.com";
+            addressBookModel.AddressBookName = "CompanyBook";
+            addressBookModel.AddressBookType = "Professional";
+
+            addressBookRepo.AddNewContactInToDataBase(addressBookModel);
+            Console.WriteLine("Contact added SuccesFull: "+addressBookModel); 
 
         }
     }
