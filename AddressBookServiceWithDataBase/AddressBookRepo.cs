@@ -229,6 +229,12 @@ namespace AddressBookServiceWithDataBase
             }
         }
 
+        /// <summary>
+        /// Adds the new contact in to data base.
+        /// </summary>
+        /// <param name="addressBookModel">The address book model.</param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public bool AddNewContactInToDataBase(AddressBookModel addressBookModel)
         {
             using (this.connection)
