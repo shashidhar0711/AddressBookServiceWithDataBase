@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 
@@ -226,6 +227,53 @@ namespace AddressBookServiceWithDataBase
             {
                 this.connection.Close();
             }
+        }
+
+        public bool AddNewContactInToDataBase(AddressBookModel addressBookModel)
+        {
+            using (this.connection)
+            {
+                //AddressBookModel addressBookModel = new AddressBookModel();
+                try
+                {
+                    using (this.connection)
+                    {
+                        SqlCommand command = new SqlCommand("spAddNewContactInToDataBase", this.connection);
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@FullName", addressBookModel.FullName);
+                        command.Parameters.AddWithValue("@Address", addressBookModel.Address);
+                        command.Parameters.AddWithValue("@City", addressBookModel.City);
+                        command.Parameters.AddWithValue("@State", addressBookModel.State);
+                        command.Parameters.AddWithValue("@PhoneNumber", addressBookModel.Zip);
+                        command.Parameters.AddWithValue("@Zip", addressBookModel.PhoneNumber);
+                        command.Parameters.AddWithValue("@Email", addressBookModel.Email);
+                        command.Parameters.AddWithValue("@AddressBookName", addressBookModel.AddressBookName);
+                        command.Parameters.AddWithValue("@AddressBookType", addressBookModel.AddressBookType);
+                        command.Parameters.AddWithValue("@Start_Date", DateTime.Now);
+                        this.connection.Open();
+                        /// It used to executing queries that does not return any data.
+                        var result = command.ExecuteNonQuery();
+                        this.connection.Close();
+                        if (result != 0)
+                        {
+                            return true;
+                        }
+                        return false;
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    throw new Exception(e.Message);
+                }
+                finally
+                {
+                    /// Connections closes
+                    this.connection.Close();
+                }
+
+            }
+  
         }
     }
 }
