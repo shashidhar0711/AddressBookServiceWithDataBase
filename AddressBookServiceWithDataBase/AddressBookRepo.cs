@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AddressBookServiceWithDataBase
 {
@@ -255,7 +256,7 @@ namespace AddressBookServiceWithDataBase
                         command.Parameters.AddWithValue("@Email", addressBookModel.Email);
                         command.Parameters.AddWithValue("@AddressBookName", addressBookModel.AddressBookName);
                         command.Parameters.AddWithValue("@AddressBookType", addressBookModel.AddressBookType);
-                        command.Parameters.AddWithValue("@Start_Date", DateTime.Now);
+                        //command.Parameters.AddWithValue("@Start_Date", DateTime.Now);
                         this.connection.Open();
                         /// It used to executing queries that does not return any data.
                         var result = command.ExecuteNonQuery();
@@ -279,7 +280,28 @@ namespace AddressBookServiceWithDataBase
                 }
 
             }
-  
+        }
+
+        /// <summary>
+        /// UC21
+        /// Adds the contacts in to database using threads.
+        /// </summary>
+        /// <param name="contactList">The contact list.</param>
+        public void AddContactsInToDBUsingThreads(List<AddressBookModel> contactList)
+        {
+
+            contactList.ForEach(contactData =>
+            {
+                Task thread = new Task(() =>
+                {
+                    Console.WriteLine("Contact Being Added : " + contactData.FullName);
+                    AddNewContactInToDataBase(contactData);
+                    Console.WriteLine("Contact Added : " + contactData.FullName);
+
+                });
+                /// Starting thread
+                thread.Start();
+            });
         }
     }
 }
